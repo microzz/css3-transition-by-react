@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <title>Todo Lite</title>
+    <style>
+        .example-enter {
+            opacity: 0.01;
+            transition: opacity .5s ease-in;
+        }
+
+        .example-enter.example-enter-active {
+            opacity: 1;
+        }
+
+        .example-leave {
+            opacity: 1;
+            transition: opacity .5s ease-in;
+        }
+
+        .example-leave.example-leave-active {
+            opacity: 0.01;
+        }
+        .container {
+            text-align: center;
+            margin: 5% auto;
+        }
+        div {
+            margin-top: .8%;
+            text-decoration: underline;
+        }
+        div:hover,button:hover {
+            cursor: pointer;
+        }
+        button {
+            width: 70px;
+            height: 70px;
+            font-size: 1rem;
+            border-radius: 50%;
+            background: greenyellow;
+            box-shadow: 1px 1px 4px 1px darkviolet;
+            text-shadow: 3px 3px 3px yellow;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container"></div>
+
+<script src="js/react-with-addons.min.js"></script>
+<script src="js/JSXTransformer.js"></script>
+
+<script type="text/jsx">
+
+    var ReactCSSTansitionGroup = React.addons.CSSTransitionGroup;
+
+    var TodoList = React.createClass({
+        getInitialState() {
+          return {
+             items: ['Hello', 'world', 'click', 'me']
+          }
+        },
+
+        handleRemove: function (i) {
+            var newItems = this.state.items;
+            newItems.splice(i, 1);
+            this.setState({
+                items: newItems
+            })
+        },
+
+        handleAdd: function () {
+            var add = [prompt('Add new item')];
+            var newItems = this.state.items.concat(add);
+            this.setState({
+                items: newItems
+            })
+
+        },
+
+        render() {
+            var items = this.state.items.map(function (item, i) {
+                return (
+                    <div onClick={this.handleRemove.bind(this, i)}>{item}</div>
+                );
+            }.bind(this));
+            return (
+                    <div>
+                        <button onClick={this.handleAdd}>Add item</button>
+                        <ReactCSSTansitionGroup transitionName="example">
+                            {items}
+                        </ReactCSSTansitionGroup>
+                    </div>
+            );
+        }
+    });
+
+    React.render(<TodoList/>, document.querySelector('.container'));
+
+</script>
+
+</body>
+</html>
