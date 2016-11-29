@@ -81,7 +81,7 @@
         render() {
             var items = this.state.items.map(function (item, i) {
                 return (
-                    <div onClick={this.handleRemove.bind(this, i)}>{item}</div>
+                    <div key={item} onClick={this.handleRemove.bind(this, i)}>{item}</div>
                 );
             }.bind(this));
             return (
